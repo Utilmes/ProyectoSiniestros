@@ -59,14 +59,25 @@ plt.title('¿En que año ocurrieron mas choques en la ciudad de Buenos Aires?')
 plt.show()
 # %%
 
-#Acá estoy intentando armar una linea de tiempo o algo asi, pero sin mucha idea
+#Armo un nuevo dataframe con las dos columnas para preparar la linea de tiempo
 
 df_temporal = df.loc[:, ['mes', 'periodo']]
 
+#Les saco los nulls, no estoy seguro de que funcione
+
 df_temporal.fillna(0)
 df_temporal.isnull().sum()
-conteo_temporal = df_temporal.value_counts()
-hola = conteo_temporal.sort_values(by='periodo')
-print(hola)
+
+#Armo un nuevo dataframe con el resultado de los conteos
+
+df_comparacion = df_temporal.value_counts().reset_index(name='count')
+
+#Ordeno los resultados primero por periodo y despues por mes
+
+df_comparacion_ordenada = df_comparacion.sort_values(by=['periodo', 'mes'])
+
+print(df_comparacion_ordenada)
+
+
 
 # %%
