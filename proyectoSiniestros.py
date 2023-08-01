@@ -1,7 +1,7 @@
 #%%
 import pandas as pd
 
-df = pd.read_csv('Victimas_siniestros_2015-2018.csv', encoding='latin1')
+df = pd.read_csv('Victimas_siniestros_2015-2018.csv')
 
 df.head()
 
@@ -25,6 +25,8 @@ mapeo_meses = {
 
 df['mes_convertido'] = df['mes'].replace(mapeo_meses)
 
+df.head()
+
 # %%
 import matplotlib.pyplot as plt 
 
@@ -35,7 +37,7 @@ conteo_mes = df['mes_convertido'].value_counts()
 #Armo el gráfico. Me lo hizo el ChatGPT
 
 plt.figure(figsize=(8, 6))  
-plt.barh(conteo_mes.index, conteo_mes)
+plt.barh(conteo_mes.index, conteo_mes) # eje y / eje x
 plt.gca().invert_yaxis()
 plt.xlabel('Cantidad')
 plt.ylabel('Meses') 
@@ -43,8 +45,6 @@ plt.title('¿En que meses ocurren mas choques en la ciudad de Buenos Aires?')
 plt.show()
 
 # %%
-import matplotlib.pyplot as plt 
-
 #Armo un dataframe con el conteo de valores de cada año
 
 conteo_año = df['periodo'].value_counts()
@@ -62,15 +62,23 @@ plt.show()
 #Armo un nuevo dataframe con las dos columnas para preparar la linea de tiempo
 
 df_temporal = df.loc[:, ['mes', 'periodo']]
+print(df_temporal)
 
 #Les saco los nulls, no estoy seguro de que funcione
+
+# %%
 
 df_temporal.fillna(0)
 df_temporal.isnull().sum()
 
+# %%
+
 #Armo un nuevo dataframe con el resultado de los conteos
 
 df_comparacion = df_temporal.value_counts().reset_index(name='count')
+print(df_comparacion)
+
+# %%
 
 #Ordeno los resultados primero por periodo y despues por mes
 
@@ -78,6 +86,30 @@ df_comparacion_ordenada = df_comparacion.sort_values(by=['periodo', 'mes'])
 
 print(df_comparacion_ordenada)
 
+# %%
 
+# - - - - - - - - - - - - - - - - - - - - - 
 
+#%%
+
+# Hay algun genero predominante entre las victimas?
+
+df.head()
+# %%
+
+df['sexo'].value_counts()
+# %%
+
+# Cual es el participante acusado mas frecuente?
+
+df.head()
+# %%
+
+df['rol'].value_counts()
+# %%
+
+df['participantes_victimas'].value_counts()
+# %%
+
+df['participantes_acusados'].value_counts()
 # %%
