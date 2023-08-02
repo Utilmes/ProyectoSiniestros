@@ -84,13 +84,18 @@ print(df_comparacion)
 
 df_comparacion_ordenada = df_comparacion.sort_values(by=['periodo', 'mes'])
 
+#Cambio el valor de mes de float a int para poder usar datetime
+
 df_comparacion_ordenada['mes'] = df_comparacion_ordenada["mes"].astype(int)
 
 print(df_comparacion_ordenada)
 
 #%% 
 
+#Creo una columna fecha pasando a datetime la colummna periodo y la columna mes
 df_comparacion_ordenada["fecha"] = df_comparacion_ordenada.apply(lambda x: pd.to_datetime(f"{x['periodo']}-{x['mes']}"), axis=1)
+
+#Realizo el gráfico. Nuevamente, todo idea del ChatGPT
 
 plt.figure(figsize=(10, 5))
 plt.plot(df_comparacion_ordenada["fecha"], df_comparacion_ordenada["count"], marker='o', linestyle='-', color='b')
@@ -102,9 +107,8 @@ plt.grid(True)
 plt.tight_layout()
 plt.show()
 
-# - - - - - - - - - - - - - - - - - - - - - 
-
 #%%
+# - - - - - - - - - - - - - - - - - - - - - 
 
 # Hay algun genero predominante entre las victimas?
 
